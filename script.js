@@ -251,7 +251,7 @@ class CVDownloader {
         e.preventDefault();
 
         // Show message to user
-        this.showDownloadMessage();
+        // this.showDownloadMessage();
 
         // In a real implementation, you would:
         // 1. Generate a PDF version of the CV
