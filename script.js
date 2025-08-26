@@ -148,7 +148,7 @@ class ScrollAnimations {
         });
 
         // Cards and timeline items
-        document.querySelectorAll('.cert-card, .timeline-item, .contact-card, .education-item').forEach(card => {
+        document.querySelectorAll('.cert-card, .project-card, .timeline-item, .contact-card, .education-item').forEach(card => {
             card.classList.add('fade-in');
             this.animatedElements.push(card);
         });
@@ -222,10 +222,11 @@ class CVDownloader {
         // For now, we'll just show a message
 
         // Example of how you might trigger a download:
-        // const link = document.createElement('a');
-        // link.href = 'path/to/cv.pdf';
-        // link.download = 'Margarita_Ambriz_Zuniga_CV.pdf';
-        // link.click();
+        const link = document.createElement('a');
+        link.target = '_blank';
+        link.href = 'files/MARGARITA_AMBRIZ_ZUNIGA_CV.pdf';
+        link.download = 'MARGARITA_AMBRIZ_ZUNIGA_CV.pdf';
+        link.click();
     }
 
     showDownloadMessage() {
@@ -306,7 +307,8 @@ class ContactHandler {
         if (linkedinLink) {
             linkedinLink.addEventListener('click', (e) => {
                 e.preventDefault();
-                this.showLinkedInMessage();
+                // this.showLinkedInMessage();
+                window.open('https://www.linkedin.com/in/margarita-ambriz-z%C3%BA%C3%B1iga-943569139/', '_blank');
             });
         }
     }
