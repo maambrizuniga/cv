@@ -24,6 +24,18 @@
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <!-- Google Analytics 4 tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CXFTX617LX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-CXFTX617LX', {
+            page_title: 'Margarita Ambriz Zúñiga - Portfolio',
+            custom_map: {'custom_parameter_1': 'portfolio_visit'}
+        });
+    </script>
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
@@ -84,7 +96,7 @@
 
                     <div class="hero-buttons">
                         <a href="#contact" class="btn btn-primary">Contactar</a>
-                        <a href="#" class="btn btn-secondary" id="downloadCV">
+                        <a href="#" class="btn btn-secondary download-cv" id="downloadCV">
                             <i class="fas fa-download"></i>
                             Descargar CV
                         </a>

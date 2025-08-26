@@ -517,49 +517,110 @@ class AccessibilityEnhancer {
     }
 }
 
-// Analytics and Tracking (Optional)
+// Analytics and Tracking
 class AnalyticsTracker {
     constructor() {
+        this.isGALoaded = typeof gtag !== 'undefined';
         this.init();
     }
 
     init() {
-        this.trackPageView();
-        this.setupEventTracking();
+        if (this.isGALoaded) {
+            this.trackPageView();
+            this.setupEventTracking();
+            console.log('Google Analytics initialized');
+        } else {
+            console.log('Analytics not available - development mode or blocked');
+        }
     }
 
     trackPageView() {
-        // Add your analytics code here (Google Analytics, etc.)
-        console.log('Page view tracked');
+        if (this.isGALoaded) {
+            gtag('event', 'page_view', {
+                page_title: document.title,
+                page_location: window.location.href,
+                page_path: window.location.pathname
+            });
+        }
     }
 
     setupEventTracking() {
-        // Track button clicks
-        document.querySelectorAll('.btn').forEach(button => {
-            button.addEventListener('click', (e) => {
-                const buttonText = e.target.textContent.trim();
-                this.trackEvent('Button Click', buttonText);
+        // Track CV downloads
+        document.querySelectorAll('.download-cv').forEach(button => {
+            button.addEventListener('click', () => {
+                this.trackEvent('download', 'CV Downloaded', 'cv_pdf');
             });
         });
 
-        // Track section views
+        // Track contact interactions
+        document.querySelectorAll('.contact-card a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                const contactType = e.target.closest('.contact-card').querySelector('h3').textContent;
+                this.trackEvent('contact', 'Contact Clicked', contactType.toLowerCase());
+            });
+        });
+
+        // Track section visits (scroll tracking)
+        const sections = document.querySelectorAll('section[id]');
         const sectionObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    const sectionId = entry.target.id;
-                    this.trackEvent('Section View', sectionId);
+                    this.trackEvent('section_view', 'Section Viewed', entry.target.id);
                 }
             });
         }, { threshold: 0.5 });
 
-        document.querySelectorAll('section[id]').forEach(section => {
-            sectionObserver.observe(section);
+        sections.forEach(section => sectionObserver.observe(section));
+
+        // Track theme changes
+        document.getElementById('darkModeToggle').addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            this.trackEvent('theme_change', 'Theme Changed', currentTheme === 'dark' ? 'light' : 'dark');
+        });
+
+        // Track navigation clicks
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                const section = e.target.getAttribute('href').replace('#', '');
+                this.trackEvent('navigation', 'Nav Clicked', section);
+            });
+        });
+
+        // Track time spent on page
+        this.startTime = Date.now();
+        window.addEventListener('beforeunload', () => {
+            const timeSpent = Math.round((Date.now() - this.startTime) / 1000);
+            this.trackEvent('engagement', 'Time Spent', timeSpent.toString());
         });
     }
 
-    trackEvent(action, label) {
-        // Add your event tracking code here
-        console.log(`Event tracked: ${action} - ${label}`);
+    trackEvent(action, description, label = '') {
+        console.log(`📊 Analytics: ${action} - ${description} - ${label}`);
+        console.log(`this.isGALoaded -> ${this.isGALoaded}`);
+        if (this.isGALoaded) {
+            gtag('event', action, {
+                event_category: 'Portfolio Interaction',
+                event_label: label,
+                custom_parameter_1: description,
+                value: 1
+            });
+        }
+
+        // También log para debugging
+        console.log(`📊 Analytics: ${action} - ${description} - ${label}`);
+    }
+
+    // Track custom conversion events
+    trackConversion(conversionType) {
+        console.log(`📊 Analytics: conversion - ${conversionType}`);
+        console.log(`this.isGALoaded -> ${this.isGALoaded}`);
+        if (this.isGALoaded) {
+            gtag('event', 'conversion', {
+                event_category: 'Portfolio Goal',
+                event_label: conversionType,
+                value: 1
+            });
+        }
     }
 }
 
