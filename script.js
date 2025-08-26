@@ -148,7 +148,7 @@ class ScrollAnimations {
         });
 
         // Cards and timeline items
-        document.querySelectorAll('.cert-card, .project-card, .timeline-item, .contact-card, .education-item').forEach(card => {
+        document.querySelectorAll('.cert-card, .project-card, .timeline-item, .contact-card, .education-item, .skill-category, .summary-card').forEach(card => {
             card.classList.add('fade-in');
             this.animatedElements.push(card);
         });
@@ -161,6 +161,43 @@ class ScrollAnimations {
                 this.observer.unobserve(entry.target);
             }
         });
+    }
+}
+
+// Skills Animation
+class SkillsAnimator {
+    constructor() {
+        this.skillBars = document.querySelectorAll('.skill-progress');
+        this.animated = new Set();
+        this.init();
+    }
+
+    init() {
+        this.observer = new IntersectionObserver(
+            (entries) => this.handleIntersection(entries),
+            {
+                threshold: 0.5,
+                rootMargin: '0px 0px -100px 0px'
+            }
+        );
+
+        this.skillBars.forEach(bar => this.observer.observe(bar));
+    }
+
+    handleIntersection(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !this.animated.has(entry.target)) {
+                this.animateSkillBar(entry.target);
+                this.animated.add(entry.target);
+            }
+        });
+    }
+
+    animateSkillBar(bar) {
+        const width = bar.getAttribute('data-width');
+        setTimeout(() => {
+            bar.style.width = `${width}%`;
+        }, 200);
     }
 }
 
@@ -553,6 +590,7 @@ document.addEventListener('DOMContentLoaded', () => {
         new MobileNavigation();
         new SmoothScrolling();
         new ScrollAnimations();
+        new SkillsAnimator(); // Add this line
         new ActiveNavigation();
         new CVDownloader();
         new ContactHandler();
