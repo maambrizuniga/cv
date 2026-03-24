@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vivelo por Autobús – Anexo Técnico Visual</title>
+<style>
+  :root {
+    --primary: #1A3C5E;
+    --accent: #F4A300;
+    --accent2: #2E86AB;
+    --light: #F0F6FF;
+    --text: #1e293b;
+    --muted: #64748b;
+    --success: #16a34a;
+    --warning: #d97706;
+    --danger: #dc2626;
+    --purple: #7c3aed;
+    --teal: #0f766e;
+    --card-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #f8fafc; color: var(--text); }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, var(--primary) 0%, #2a5298 60%, var(--accent2) 100%);
+    color: white;
+    padding: 48px 48px 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute; top: -60px; right: -60px;
+    width: 300px; height: 300px;
+    background: rgba(244,163,0,0.15);
+    border-radius: 50%;
+  }
+  .header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
+  .header h2 { font-size: 1.1rem; font-weight: 400; opacity: 0.9; margin-bottom: 16px; }
+  .header-meta { display: flex; gap: 24px; flex-wrap: wrap; }
+  .badge { background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.3);
+    padding: 4px 14px; border-radius: 20px; font-size: 0.82rem; }
+
+  /* NAV */
+  .nav { background: white; border-bottom: 2px solid var(--light);
+    padding: 0 48px; display: flex; gap: 4px; overflow-x: auto; position: sticky; top: 0; z-index: 100; }
+  .nav a { display: block; padding: 14px 18px; font-size: 0.83rem; font-weight: 600;
+    color: var(--muted); text-decoration: none; white-space: nowrap; border-bottom: 3px solid transparent;
+    transition: all 0.2s; }
+  .nav a:hover { color: var(--primary); border-bottom-color: var(--accent); }
+
+  /* SECTIONS */
+  .section { padding: 48px; max-width: 1400px; margin: 0 auto; }
+  .section + .section { padding-top: 0; }
+  .section-title {
+    font-size: 1.4rem; font-weight: 700; color: var(--primary);
+    margin-bottom: 6px; display: flex; align-items: center; gap: 10px;
+  }
+  .section-title .icon { width: 32px; height: 32px; border-radius: 8px;
+    background: var(--accent); display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; }
+  .section-subtitle { color: var(--muted); font-size: 0.9rem; margin-bottom: 28px; }
+  .divider { height: 1px; background: #e2e8f0; margin: 48px 0; }
+
+  /* CARDS GRID */
+  .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+  .card { background: white; border-radius: 14px; padding: 24px; box-shadow: var(--card-shadow);
+    border: 1px solid #e2e8f0; position: relative; overflow: hidden; }
+  .card-accent { border-top: 4px solid var(--accent); }
+  .card-primary { border-top: 4px solid var(--primary); }
+  .card-accent2 { border-top: 4px solid var(--accent2); }
+  .card-success { border-top: 4px solid var(--success); }
+  .card-purple { border-top: 4px solid var(--purple); }
+  .card-teal { border-top: 4px solid var(--teal); }
+  .card h3 { font-size: 0.95rem; font-weight: 700; color: var(--primary); margin-bottom: 12px; }
+  .card ul { list-style: none; padding: 0; }
+  .card ul li { font-size: 0.83rem; color: var(--text); padding: 4px 0;
+    padding-left: 14px; position: relative; }
+  .card ul li::before { content: '›'; position: absolute; left: 0; color: var(--accent2); font-weight: 700; }
+  .card-icon { font-size: 2rem; margin-bottom: 10px; }
+
+  /* SITEMAP */
+  .sitemap { display: flex; flex-direction: column; align-items: center; gap: 0; }
+  .sm-root { background: var(--primary); color: white; padding: 12px 28px; border-radius: 10px;
+    font-weight: 700; font-size: 0.9rem; text-align: center; min-width: 180px; }
+  .sm-connector-v { width: 2px; height: 24px; background: #cbd5e1; }
+  .sm-row { display: flex; gap: 0; align-items: flex-start; }
+  .sm-branch { display: flex; flex-direction: column; align-items: center; }
+  .sm-module { background: var(--accent2); color: white; padding: 9px 16px; border-radius: 8px;
+    font-weight: 600; font-size: 0.78rem; text-align: center; min-width: 140px; max-width: 160px; }
+  .sm-module.admin { background: var(--primary); }
+  .sm-children { display: flex; flex-direction: column; gap: 4px; margin-top: 4px; }
+  .sm-child { background: var(--light); border: 1.5px solid var(--accent2); color: var(--primary);
+    padding: 5px 10px; border-radius: 6px; font-size: 0.72rem; text-align: center; min-width: 130px; }
+  .sm-child.admin { border-color: var(--primary); }
+  .sm-h-line { height: 2px; background: #cbd5e1; flex: 1; min-width: 20px; align-self: flex-start; margin-top: 20px; }
+  .sm-connector-h { display: flex; align-items: flex-start; }
+  .horizontal-tree { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; }
+  .sm-col { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .sm-connector-v2 { width: 2px; height: 16px; background: #cbd5e1; }
+
+  /* ARCHITECTURE */
+  .arch-diagram { display: flex; flex-direction: column; gap: 12px; }
+  .arch-layer { display: flex; gap: 10px; align-items: stretch; }
+  .arch-label { writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg);
+    font-size: 0.7rem; font-weight: 700; color: white; padding: 8px 6px;
+    border-radius: 8px 0 0 8px; display: flex; align-items: center; justify-content: center;
+    min-width: 28px; }
+  .arch-boxes { display: flex; gap: 10px; flex: 1; flex-wrap: wrap; }
+  .arch-box { flex: 1; min-width: 140px; border-radius: 10px; padding: 16px;
+    display: flex; flex-direction: column; gap: 6px; border: 1px solid #e2e8f0; }
+  .arch-box h4 { font-size: 0.8rem; font-weight: 700; }
+  .arch-box p { font-size: 0.74rem; color: var(--muted); }
+  .arch-box .tech-tag { display: inline-block; background: rgba(0,0,0,0.07);
+    padding: 2px 8px; border-radius: 12px; font-size: 0.68rem; font-weight: 600; margin: 2px 2px 0 0; }
+  .arch-arrow { text-align: center; font-size: 1.2rem; color: var(--muted); }
+
+  /* GANTT */
+  .gantt-wrapper { overflow-x: auto; }
+  .gantt { min-width: 900px; }
+  .gantt-header { display: grid; font-size: 0.75rem; font-weight: 700;
+    color: white; background: var(--primary); border-radius: 10px 10px 0 0; }
+  .gantt-row { display: grid; border-bottom: 1px solid #e2e8f0; background: white; }
+  .gantt-row:last-child { border-radius: 0 0 10px 10px; }
+  .gantt-row:nth-child(even) { background: #f8fafc; }
+  .gantt-cell { padding: 8px 10px; font-size: 0.78rem; border-right: 1px solid #e2e8f0; }
+  .gantt-cell:last-child { border-right: none; }
+  .gantt-bar { height: 20px; border-radius: 5px; display: flex; align-items: center;
+    justify-content: center; font-size: 0.65rem; font-weight: 700; color: white; }
+  .gantt-etapa { font-weight: 700; font-size: 0.78rem; color: var(--primary); }
+  .gantt-desc { font-size: 0.72rem; color: var(--muted); }
+
+  /* FLOW */
+  .flow { display: flex; flex-direction: column; align-items: center; gap: 0; }
+  .flow-step { display: flex; align-items: center; gap: 16px; width: 100%; max-width: 700px; }
+  .flow-num { width: 36px; height: 36px; border-radius: 50%; background: var(--primary);
+    color: white; font-weight: 700; display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem; flex-shrink: 0; }
+  .flow-box { flex: 1; background: white; border-radius: 10px; padding: 14px 18px;
+    box-shadow: var(--card-shadow); border-left: 4px solid var(--accent2); }
+  .flow-box h4 { font-size: 0.85rem; font-weight: 700; color: var(--primary); margin-bottom: 4px; }
+  .flow-box p { font-size: 0.78rem; color: var(--muted); }
+  .flow-arrow { font-size: 1.5rem; color: var(--muted); margin: 4px 0 4px 54px; }
+  .flow-result { background: linear-gradient(135deg, var(--success), #22c55e);
+    color: white; border-radius: 10px; padding: 14px 24px; text-align: center;
+    font-weight: 700; font-size: 0.88rem; margin-top: 12px; max-width: 700px; width: 100%; }
+
+  /* STAGES */
+  .stages { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+  .stage { background: white; border-radius: 14px; padding: 20px; box-shadow: var(--card-shadow);
+    border: 1px solid #e2e8f0; position: relative; overflow: hidden; }
+  .stage-num { position: absolute; top: 16px; right: 16px; width: 36px; height: 36px;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 1rem; opacity: 0.15; font-family: Georgia, serif; font-size: 2rem; }
+  .stage h3 { font-size: 0.88rem; font-weight: 700; margin-bottom: 10px; }
+  .stage ul { list-style: none; }
+  .stage ul li { font-size: 0.78rem; color: var(--muted); padding: 3px 0 3px 14px; position: relative; }
+  .stage ul li::before { content: '✓'; position: absolute; left: 0; color: var(--success); font-weight: 700; }
+  .stage-bar { height: 4px; border-radius: 4px; margin-bottom: 14px; }
+
+  /* TECH STACK */
+  .tech-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+  .tech-card { background: white; border-radius: 12px; padding: 18px; box-shadow: var(--card-shadow);
+    border: 1px solid #e2e8f0; text-align: center; }
+  .tech-card .ico { font-size: 2.2rem; margin-bottom: 8px; }
+  .tech-card h4 { font-size: 0.82rem; font-weight: 700; color: var(--primary); margin-bottom: 6px; }
+  .tech-card .tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; }
+  .tech-tag { display: inline-block; padding: 3px 8px; border-radius: 12px; font-size: 0.68rem;
+    font-weight: 600; }
+
+  /* TEAM */
+  .team-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+  .team-card { background: white; border-radius: 14px; padding: 24px; box-shadow: var(--card-shadow);
+    border: 1px solid #e2e8f0; }
+  .team-card .avatar { width: 56px; height: 56px; border-radius: 50%; display: flex;
+    align-items: center; justify-content: center; font-size: 1.6rem; margin-bottom: 12px; }
+  .team-card h3 { font-size: 0.9rem; font-weight: 700; color: var(--primary); margin-bottom: 4px; }
+  .team-card .role { font-size: 0.78rem; color: var(--muted); margin-bottom: 12px; }
+  .team-card ul { list-style: none; }
+  .team-card ul li { font-size: 0.77rem; color: var(--text); padding: 3px 0 3px 14px; position: relative; }
+  .team-card ul li::before { content: '→'; position: absolute; left: 0; color: var(--accent2); }
+
+  /* SUMMARY STATS */
+  .stats { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; margin-bottom: 40px; }
+  .stat { background: white; border-radius: 12px; padding: 20px; box-shadow: var(--card-shadow);
+    text-align: center; border-top: 4px solid; }
+  .stat .val { font-size: 2.2rem; font-weight: 700; margin-bottom: 4px; }
+  .stat .lbl { font-size: 0.78rem; color: var(--muted); font-weight: 500; }
+
+  /* LEGEND */
+  .legend { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 0.78rem; color: var(--muted); }
+  .legend-dot { width: 12px; height: 12px; border-radius: 3px; }
+
+  footer { text-align: center; padding: 32px; background: var(--primary); color: rgba(255,255,255,0.6);
+    font-size: 0.8rem; margin-top: 48px; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <h1>🚌 Vivelo por Autobús</h1>
+  <h2>Anexo Técnico — Desarrollo de Aplicación Móvil y Panel Administrativo Web</h2>
+  <div class="header-meta">
+    <span class="badge">📅 23 de marzo de 2026</span>
+    <span class="badge">⏱ 10 Semanas · MVP</span>
+    <span class="badge">📱 iOS + Android + Web</span>
+    <span class="badge">👥 4 Personas</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="#resumen">Resumen</a>
+  <a href="#sitemap-app">Mapa App Móvil</a>
+  <a href="#sitemap-admin">Mapa Panel Admin</a>
+  <a href="#arquitectura">Arquitectura</a>
+  <a href="#autenticacion">Autenticación</a>
+  <a href="#etapas">Etapas</a>
+  <a href="#cronograma">Cronograma</a>
+  <a href="#stack">Stack Tecnológico</a>
+  <a href="#equipo">Equipo</a>
+</nav>
+
+<!-- RESUMEN -->
+<div class="section" id="resumen">
+  <div class="section-title"><span class="icon">📊</span> Resumen Ejecutivo</div>
+  <div class="section-subtitle">Indicadores clave del proyecto</div>
+
+  <div class="stats">
+    <div class="stat" style="border-color: var(--primary);">
+      <div class="val" style="color: var(--primary);">10</div>
+      <div class="lbl">Semanas de desarrollo</div>
+    </div>
+    <div class="stat" style="border-color: var(--accent);">
+      <div class="val" style="color: var(--accent);">7</div>
+      <div class="lbl">Etapas de desarrollo</div>
+    </div>
+    <div class="stat" style="border-color: var(--accent2);">
+      <div class="val" style="color: var(--accent2);">6</div>
+      <div class="lbl">Módulos app móvil</div>
+    </div>
+    <div class="stat" style="border-color: var(--success);">
+      <div class="val" style="color: var(--success);">6</div>
+      <div class="lbl">Módulos panel admin</div>
+    </div>
+    <div class="stat" style="border-color: var(--purple);">
+      <div class="val" style="color: var(--purple);">4</div>
+      <div class="lbl">Personas en el equipo</div>
+    </div>
+    <div class="stat" style="border-color: var(--teal);">
+      <div class="val" style="color: var(--teal);">5</div>
+      <div class="lbl">Sucursales</div>
+    </div>
+  </div>
+
+  <div class="cards-grid">
+    <div class="card card-accent2">
+      <div class="card-icon">📱</div>
+      <h3>Aplicación Móvil</h3>
+      <ul>
+        <li>iOS + Android (React Native + Expo)</li>
+        <li>Autenticación con Firebase</li>
+        <li>6 módulos funcionales</li>
+        <li>Notificaciones push</li>
+        <li>Sistema de recompensas y kilometraje</li>
+      </ul>
+    </div>
+    <div class="card card-primary">
+      <div class="card-icon">🖥️</div>
+      <h3>Panel Administrativo Web</h3>
+      <ul>
+        <li>React (Single Page App)</li>
+        <li>Acceso restringido (hasta 3 admins)</li>
+        <li>Gestión de usuarios, viajes y kilometraje</li>
+        <li>Envío de notificaciones push</li>
+        <li>Gestión de sucursales y contactos</li>
+      </ul>
+    </div>
+    <div class="card card-accent">
+      <div class="card-icon">🏗️</div>
+      <h3>Backend / API</h3>
+      <ul>
+        <li>Django 5 + Django REST Framework</li>
+        <li>PostgreSQL</li>
+        <li>Firebase Admin SDK</li>
+        <li>Autenticación JWT unificada</li>
+        <li>Lógica de recompensas</li>
+      </ul>
+    </div>
+    <div class="card card-success">
+      <div class="card-icon">🔥</div>
+      <h3>Firebase Services</h3>
+      <ul>
+        <li>Authentication</li>
+        <li>FCM (notificaciones push)</li>
+        <li>Remote Config</li>
+        <li>Crashlytics + Analytics</li>
+        <li>App Check</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- SITEMAP APP MÓVIL -->
+<div class="section" id="sitemap-app">
+  <div class="section-title"><span class="icon">📱</span> Mapa del Sitio — Aplicación Móvil</div>
+  <div class="section-subtitle">Estructura de módulos y pantallas de la app para usuarios finales</div>
+
+  <div style="background: white; border-radius: 16px; padding: 36px; box-shadow: var(--card-shadow); border: 1px solid #e2e8f0; overflow-x: auto;">
+    <div class="sitemap">
+      <div class="sm-root">🚌 App Móvil — Vivelo</div>
+      <div class="sm-connector-v"></div>
+      <div style="display: flex; gap: 0; justify-content: center; width: 100%;">
+        <!-- Horizontal top line -->
+        <div style="display: flex; align-items: flex-start; width: 100%; justify-content: center;">
+          <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+            <div style="height:2px; background:#cbd5e1; width:100%; margin-top:0;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Module grid -->
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 0;">
+
+      <!-- Auth -->
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+        <div style="height:24px; width:2px; background:#cbd5e1;"></div>
+        <div style="background: #1A3C5E; color: white; padding: 10px 18px; border-radius: 10px; font-weight: 700; font-size: 0.82rem; text-align: center; width: 100%;">🔐 Autenticación</div>
+        <div style="display: flex; flex-direction: column; gap: 6px; width: 100%;">
+          <div style="background: #EFF6FF; border: 1.5px solid #93c5fd; color: #1e40af; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Inicio de sesión<br><span style="color:#64748b; font-size: 0.68rem;">Email o teléfono + contraseña</span></div>
+          <div style="background: #EFF6FF; border: 1.5px solid #93c5fd; color: #1e40af; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Registro de usuario<br><span style="color:#64748b; font-size: 0.68rem;">Nombre, agencia, sucursal</span></div>
+          <div style="background: #EFF6FF; border: 1.5px solid #93c5fd; color: #1e40af; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Recuperación de contraseña</div>
+          <div style="background: #EFF6FF; border: 1.5px solid #93c5fd; color: #1e40af; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Selección de sucursal<br><span style="color:#64748b; font-size: 0.68rem;">Moroleón · Guanajuato · Querétaro<br>León · Manzanillo</span></div>
+        </div>
+      </div>
+
+      <!-- Perfil -->
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+        <div style="height:24px; width:2px; background:#cbd5e1;"></div>
+        <div style="background: #0f766e; color: white; padding: 10px 18px; border-radius: 10px; font-weight: 700; font-size: 0.82rem; text-align: center; width: 100%;">👤 Perfil de Usuario</div>
+        <div style="display: flex; flex-direction: column; gap: 6px; width: 100%;">
+          <div style="background: #F0FDFA; border: 1.5px solid #5eead4; color: #134e4a; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Nombre completo</div>
+          <div style="background: #F0FDFA; border: 1.5px solid #5eead4; color: #134e4a; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Datos de contacto</div>
+          <div style="background: #F0FDFA; border: 1.5px solid #5eead4; color: #134e4a; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Sucursal asociada</div>
+          <div style="background: #F0FDFA; border: 1.5px solid #5eead4; color: #134e4a; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Kilometraje acumulado</div>
+          <div style="background: #F0FDFA; border: 1.5px solid #5eead4; color: #134e4a; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Nivel / Score actual</div>
+        </div>
+      </div>
+
+      <!-- Viaje próximo -->
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+        <div style="height:24px; width:2px; background:#cbd5e1;"></div>
+        <div style="background: #b45309; color: white; padding: 10px 18px; border-radius: 10px; font-weight: 700; font-size: 0.82rem; text-align: center; width: 100%;">🚍 Viaje Próximo</div>
+        <div style="display: flex; flex-direction: column; gap: 6px; width: 100%;">
+          <div style="background: #FFFBEB; border: 1.5px solid #fcd34d; color: #78350f; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Fecha y hora de salida</div>
+          <div style="background: #FFFBEB; border: 1.5px solid #fcd34d; color: #78350f; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Lugar de salida y destino</div>
+          <div style="background: #FFFBEB; border: 1.5px solid #fcd34d; color: #78350f; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Duración estimada</div>
+          <div style="background: #FFFBEB; border: 1.5px solid #fcd34d; color: #78350f; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Info del autobús</div>
+          <div style="background: #FFFBEB; border: 1.5px solid #fcd34d; color: #78350f; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Info del chofer</div>
+        </div>
+      </div>
+
+      <!-- Historial -->
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 20px;">
+        <div style="height:24px; width:2px; background:#cbd5e1;"></div>
+        <div style="background: #2E86AB; color: white; padding: 10px 18px; border-radius: 10px; font-weight: 700; font-size: 0.82rem; text-align: center; width: 100%;">📋 Historial de Viajes</div>
+        <div style="display: flex; flex-direction: column; gap: 6px; width: 100%;">
+          <div style="background: #EFF6FF; border: 1.5px solid #93c5fd; color: #1e40af; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Viajes realizados</div>
+          <div style="background: #EFF6FF; border: 1.5px solid #93c5fd; color: #1e40af; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Datos del trayecto</div>
+          <div style="background: #EFF6FF; border: 1.5px solid #93c5fd; color: #1e40af; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Acumulación de km</div>
+          <div style="background: #EFF6FF; border: 1.5px solid #93c5fd; color: #1e40af; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Caché local básico</div>
+        </div>
+      </div>
+
+      <!-- Notificaciones -->
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 20px;">
+        <div style="height:24px; width:2px; background:#cbd5e1;"></div>
+        <div style="background: #7c3aed; color: white; padding: 10px 18px; border-radius: 10px; font-weight: 700; font-size: 0.82rem; text-align: center; width: 100%;">🔔 Notificaciones</div>
+        <div style="display: flex; flex-direction: column; gap: 6px; width: 100%;">
+          <div style="background: #F5F3FF; border: 1.5px solid #c4b5fd; color: #4c1d95; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Recordatorios de viaje</div>
+          <div style="background: #F5F3FF; border: 1.5px solid #c4b5fd; color: #4c1d95; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Avisos previos a salida</div>
+          <div style="background: #F5F3FF; border: 1.5px solid #c4b5fd; color: #4c1d95; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Promociones del mes</div>
+          <div style="background: #F5F3FF; border: 1.5px solid #c4b5fd; color: #4c1d95; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Puntos acumulados</div>
+          <div style="background: #F5F3FF; border: 1.5px solid #c4b5fd; color: #4c1d95; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Beneficios disponibles</div>
+        </div>
+      </div>
+
+      <!-- Recompensas -->
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 20px;">
+        <div style="height:24px; width:2px; background:#cbd5e1;"></div>
+        <div style="background: #dc2626; color: white; padding: 10px 18px; border-radius: 10px; font-weight: 700; font-size: 0.82rem; text-align: center; width: 100%;">⭐ Recompensas (Core)</div>
+        <div style="display: flex; flex-direction: column; gap: 6px; width: 100%;">
+          <div style="background: #FEF2F2; border: 1.5px solid #fca5a5; color: #7f1d1d; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Total de km acumulados</div>
+          <div style="background: #FEF2F2; border: 1.5px solid #fca5a5; color: #7f1d1d; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Nivel actual del usuario</div>
+          <div style="background: #FEF2F2; border: 1.5px solid #fca5a5; color: #7f1d1d; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Progreso al siguiente nivel</div>
+          <div style="background: #FEF2F2; border: 1.5px solid #fca5a5; color: #7f1d1d; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Beneficios disponibles</div>
+          <div style="background: #FEF2F2; border: 1.5px solid #fca5a5; color: #7f1d1d; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Reglas del programa</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- SITEMAP ADMIN -->
+<div class="section" id="sitemap-admin">
+  <div class="section-title"><span class="icon">🖥️</span> Mapa del Sitio — Panel Administrativo Web</div>
+  <div class="section-subtitle">Estructura de módulos del panel de gestión interna</div>
+
+  <div style="background: white; border-radius: 16px; padding: 36px; box-shadow: var(--card-shadow); border: 1px solid #e2e8f0; overflow-x: auto;">
+
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 0;">
+      <div style="background: linear-gradient(135deg, #1A3C5E, #2a5298); color: white; padding: 14px 32px; border-radius: 12px; font-weight: 700; font-size: 0.95rem; text-align: center; box-shadow: 0 4px 12px rgba(26,60,94,0.3);">🖥️ Panel Administrativo Web</div>
+      <div style="height: 24px; width: 2px; background: #cbd5e1;"></div>
+      <div style="background: #334155; color: white; padding: 10px 24px; border-radius: 8px; font-size: 0.82rem; font-weight: 600; text-align: center;">🔐 Login Restringido — hasta 3 administradores</div>
+      <div style="height: 24px; width: 2px; background: #cbd5e1;"></div>
+      <div style="background: #475569; color: white; padding: 10px 24px; border-radius: 8px; font-size: 0.82rem; font-weight: 600; text-align: center;">📊 Dashboard Principal</div>
+      <div style="height: 24px; width: 2px; background: #cbd5e1;"></div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 0;">
+
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+        <div style="height:0; width:2px; background:#cbd5e1;"></div>
+        <div style="background: #1A3C5E; color: white; padding: 10px 18px; border-radius: 10px; font-weight: 700; font-size: 0.82rem; text-align: center; width: 100%;">👥 Gestión de Usuarios</div>
+        <div style="display: flex; flex-direction: column; gap: 6px; width: 100%;">
+          <div style="background: #EFF6FF; border: 1.5px solid #93c5fd; color: #1e40af; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Listado de usuarios</div>
+          <div style="background: #EFF6FF; border: 1.5px solid #93c5fd; color: #1e40af; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Búsqueda (nombre, email, tel.)</div>
+          <div style="background: #EFF6FF; border: 1.5px solid #93c5fd; color: #1e40af; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Perfil del usuario</div>
+          <div style="background: #EFF6FF; border: 1.5px solid #93c5fd; color: #1e40af; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Kilometraje acumulado</div>
+          <div style="background: #EFF6FF; border: 1.5px solid #93c5fd; color: #1e40af; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Estatus activo / inactivo</div>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+        <div style="height:0; width:2px; background:#cbd5e1;"></div>
+        <div style="background: #0f766e; color: white; padding: 10px 18px; border-radius: 10px; font-weight: 700; font-size: 0.82rem; text-align: center; width: 100%;">📏 Gestión de Kilometraje</div>
+        <div style="display: flex; flex-direction: column; gap: 6px; width: 100%;">
+          <div style="background: #F0FDFA; border: 1.5px solid #5eead4; color: #134e4a; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Asignación manual de km</div>
+          <div style="background: #F0FDFA; border: 1.5px solid #5eead4; color: #134e4a; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Actualización del acumulado</div>
+          <div style="background: #F0FDFA; border: 1.5px solid #5eead4; color: #134e4a; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Historial de movimientos</div>
+          <div style="background: #F0FDFA; border: 1.5px solid #5eead4; color: #134e4a; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Fecha y responsable</div>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+        <div style="height:0; width:2px; background:#cbd5e1;"></div>
+        <div style="background: #7c3aed; color: white; padding: 10px 18px; border-radius: 10px; font-weight: 700; font-size: 0.82rem; text-align: center; width: 100%;">🔔 Gestión de Notificaciones</div>
+        <div style="display: flex; flex-direction: column; gap: 6px; width: 100%;">
+          <div style="background: #F5F3FF; border: 1.5px solid #c4b5fd; color: #4c1d95; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Envío a todos los usuarios</div>
+          <div style="background: #F5F3FF; border: 1.5px solid #c4b5fd; color: #4c1d95; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Envío a usuarios específicos</div>
+          <div style="background: #F5F3FF; border: 1.5px solid #c4b5fd; color: #4c1d95; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Tipo: Promociones</div>
+          <div style="background: #F5F3FF; border: 1.5px solid #c4b5fd; color: #4c1d95; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Tipo: Avisos de puntos</div>
+          <div style="background: #F5F3FF; border: 1.5px solid #c4b5fd; color: #4c1d95; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Tipo: Recordatorios</div>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 20px;">
+        <div style="height:0; width:2px; background:#cbd5e1;"></div>
+        <div style="background: #b45309; color: white; padding: 10px 18px; border-radius: 10px; font-weight: 700; font-size: 0.82rem; text-align: center; width: 100%;">🚍 Gestión de Viajes</div>
+        <div style="display: flex; flex-direction: column; gap: 6px; width: 100%;">
+          <div style="background: #FFFBEB; border: 1.5px solid #fcd34d; color: #78350f; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Registro manual de viajes</div>
+          <div style="background: #FFFBEB; border: 1.5px solid #fcd34d; color: #78350f; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Fecha · Hora · Origen · Destino</div>
+          <div style="background: #FFFBEB; border: 1.5px solid #fcd34d; color: #78350f; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Autobús y chofer</div>
+          <div style="background: #FFFBEB; border: 1.5px solid #fcd34d; color: #78350f; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Historial por usuario</div>
+          <div style="background: #FFFBEB; border: 1.5px solid #fcd34d; color: #78350f; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Viajes programados y pasados</div>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 20px;">
+        <div style="height:0; width:2px; background:#cbd5e1;"></div>
+        <div style="background: #dc2626; color: white; padding: 10px 18px; border-radius: 10px; font-weight: 700; font-size: 0.82rem; text-align: center; width: 100%;">📍 Gestión de Sucursales</div>
+        <div style="display: flex; flex-direction: column; gap: 6px; width: 100%;">
+          <div style="background: #FEF2F2; border: 1.5px solid #fca5a5; color: #7f1d1d; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Alta y edición de WhatsApp</div>
+          <div style="background: #FEF2F2; border: 1.5px solid #fca5a5; color: #7f1d1d; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Ciudad / Estado</div>
+          <div style="background: #FEF2F2; border: 1.5px solid #fca5a5; color: #7f1d1d; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Activación / desactivación</div>
+          <div style="background: #FEF2F2; border: 1.5px solid #fca5a5; color: #7f1d1d; padding: 6px 10px; border-radius: 7px; font-size: 0.73rem; text-align: center;">Contacto rápido en app</div>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; margin-top: 20px;">
+        <div style="background: #f1f5f9; border: 2px dashed #94a3b8; border-radius: 10px; padding: 20px; text-align: center; width: 100%;">
+          <div style="font-size: 1.5rem; margin-bottom: 8px;">🗺️</div>
+          <div style="font-size: 0.8rem; font-weight: 700; color: #475569; margin-bottom: 4px;">Sucursales</div>
+          <div style="display: flex; flex-wrap: wrap; gap: 4px; justify-content: center;">
+            <span style="background: #e2e8f0; padding: 2px 8px; border-radius: 12px; font-size: 0.68rem; color: #475569;">Moroleón</span>
+            <span style="background: #e2e8f0; padding: 2px 8px; border-radius: 12px; font-size: 0.68rem; color: #475569;">Guanajuato</span>
+            <span style="background: #e2e8f0; padding: 2px 8px; border-radius: 12px; font-size: 0.68rem; color: #475569;">Querétaro</span>
+            <span style="background: #e2e8f0; padding: 2px 8px; border-radius: 12px; font-size: 0.68rem; color: #475569;">León</span>
+            <span style="background: #e2e8f0; padding: 2px 8px; border-radius: 12px; font-size: 0.68rem; color: #475569;">Manzanillo</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ARQUITECTURA -->
+<div class="section" id="arquitectura">
+  <div class="section-title"><span class="icon">🏗️</span> Diagrama de Arquitectura</div>
+  <div class="section-subtitle">Capas de la solución centralizada con autenticación unificada</div>
+
+  <div style="background: white; border-radius: 16px; padding: 36px; box-shadow: var(--card-shadow); border: 1px solid #e2e8f0;">
+
+    <!-- Layer 1: Clients -->
+    <div style="display: flex; gap: 12px; margin-bottom: 8px;">
+      <div style="background: #1A3C5E; color: white; writing-mode: vertical-rl; transform: rotate(180deg); padding: 10px 8px; border-radius: 10px 0 0 10px; font-size: 0.7rem; font-weight: 700; display: flex; align-items: center; justify-content: center; min-width: 30px;">CLIENTES</div>
+      <div style="flex: 1; display: flex; gap: 12px;">
+        <div style="flex: 1; background: #EFF6FF; border: 2px solid #3b82f6; border-radius: 12px; padding: 18px; text-align: center;">
+          <div style="font-size: 1.8rem; margin-bottom: 6px;">📱</div>
+          <div style="font-weight: 700; font-size: 0.85rem; color: #1e40af; margin-bottom: 4px;">App Móvil iOS + Android</div>
+          <div style="background: #3b82f6; color: white; padding: 3px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; display: inline-block;">React Native + Expo SDK 52+</div>
+        </div>
+        <div style="flex: 1; background: #F0FDF4; border: 2px solid #22c55e; border-radius: 12px; padding: 18px; text-align: center;">
+          <div style="font-size: 1.8rem; margin-bottom: 6px;">🖥️</div>
+          <div style="font-weight: 700; font-size: 0.85rem; color: #14532d; margin-bottom: 4px;">Panel Administrativo Web</div>
+          <div style="background: #22c55e; color: white; padding: 3px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: 600; display: inline-block;">React</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align: center; font-size: 1.4rem; color: #94a3b8; margin: 4px 0 4px 42px;">⬇️ HTTPS / Bearer Token</div>
+
+    <!-- Layer 2: Auth -->
+    <div style="display: flex; gap: 12px; margin-bottom: 8px;">
+      <div style="background: #F4A300; color: white; writing-mode: vertical-rl; transform: rotate(180deg); padding: 10px 8px; border-radius: 10px 0 0 10px; font-size: 0.7rem; font-weight: 700; display: flex; align-items: center; justify-content: center; min-width: 30px;">AUTH</div>
+      <div style="flex: 1; background: #FFFBEB; border: 2px solid #f59e0b; border-radius: 12px; padding: 18px; display: flex; align-items: center; gap: 20px;">
+        <div style="font-size: 2rem;">🔥</div>
+        <div style="flex: 1;">
+          <div style="font-weight: 700; font-size: 0.9rem; color: #78350f; margin-bottom: 4px;">Firebase Authentication</div>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+            <span style="background: #fef3c7; border: 1px solid #fcd34d; padding: 3px 8px; border-radius: 10px; font-size: 0.7rem; color: #78350f; font-weight: 600;">Email / Teléfono + Contraseña</span>
+            <span style="background: #fef3c7; border: 1px solid #fcd34d; padding: 3px 8px; border-radius: 10px; font-size: 0.7rem; color: #78350f; font-weight: 600;">ID Token (JWT)</span>
+            <span style="background: #fef3c7; border: 1px solid #fcd34d; padding: 3px 8px; border-radius: 10px; font-size: 0.7rem; color: #78350f; font-weight: 600;">Authorization: Bearer &lt;token&gt;</span>
+          </div>
+        </div>
+        <div style="text-align: center; font-size: 0.72rem; color: #78350f; max-width: 120px;">
+          <div style="font-size: 1.2rem;">✅</div>
+          <strong>Unificado</strong><br>App móvil + Panel web
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align: center; font-size: 1.4rem; color: #94a3b8; margin: 4px 0 4px 42px;">⬇️ Validación Token</div>
+
+    <!-- Layer 3: Backend -->
+    <div style="display: flex; gap: 12px; margin-bottom: 8px;">
+      <div style="background: #7c3aed; color: white; writing-mode: vertical-rl; transform: rotate(180deg); padding: 10px 8px; border-radius: 10px 0 0 10px; font-size: 0.7rem; font-weight: 700; display: flex; align-items: center; justify-content: center; min-width: 30px;">BACKEND</div>
+      <div style="flex: 1; display: flex; gap: 12px;">
+        <div style="flex: 2; background: #F5F3FF; border: 2px solid #8b5cf6; border-radius: 12px; padding: 18px;">
+          <div style="font-weight: 700; font-size: 0.88rem; color: #4c1d95; margin-bottom: 10px;">⚙️ Django 5 + Django REST Framework</div>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px;">
+            <span style="background: #ede9fe; padding: 3px 8px; border-radius: 10px; font-size: 0.7rem; color: #4c1d95; font-weight: 600;">Endpoints API</span>
+            <span style="background: #ede9fe; padding: 3px 8px; border-radius: 10px; font-size: 0.7rem; color: #4c1d95; font-weight: 600;">Custom Auth Backend</span>
+            <span style="background: #ede9fe; padding: 3px 8px; border-radius: 10px; font-size: 0.7rem; color: #4c1d95; font-weight: 600;">Lógica de Recompensas</span>
+            <span style="background: #ede9fe; padding: 3px 8px; border-radius: 10px; font-size: 0.7rem; color: #4c1d95; font-weight: 600;">Gestión de usuarios y viajes</span>
+            <span style="background: #ede9fe; padding: 3px 8px; border-radius: 10px; font-size: 0.7rem; color: #4c1d95; font-weight: 600;">firebase-admin SDK</span>
+          </div>
+        </div>
+        <div style="flex: 1; background: #FFF7ED; border: 2px solid #f97316; border-radius: 12px; padding: 18px; text-align: center;">
+          <div style="font-size: 1.5rem; margin-bottom: 6px;">🔔</div>
+          <div style="font-weight: 700; font-size: 0.82rem; color: #7c2d12; margin-bottom: 8px;">Notificaciones Push</div>
+          <span style="background: #fed7aa; padding: 3px 8px; border-radius: 10px; font-size: 0.7rem; color: #7c2d12; font-weight: 600;">Firebase FCM</span><br><br>
+          <span style="background: #fed7aa; padding: 3px 8px; border-radius: 10px; font-size: 0.7rem; color: #7c2d12; font-weight: 600;">Expo Notifications</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align: center; font-size: 1.4rem; color: #94a3b8; margin: 4px 0 4px 42px;">⬇️ ORM / Queries</div>
+
+    <!-- Layer 4: DB -->
+    <div style="display: flex; gap: 12px; margin-bottom: 8px;">
+      <div style="background: #0f766e; color: white; writing-mode: vertical-rl; transform: rotate(180deg); padding: 10px 8px; border-radius: 10px 0 0 10px; font-size: 0.7rem; font-weight: 700; display: flex; align-items: center; justify-content: center; min-width: 30px;">BASE DE DATOS</div>
+      <div style="flex: 1; background: #F0FDFA; border: 2px solid #14b8a6; border-radius: 12px; padding: 18px; display: flex; align-items: center; gap: 20px;">
+        <div style="font-size: 2rem;">🗄️</div>
+        <div>
+          <div style="font-weight: 700; font-size: 0.9rem; color: #134e4a; margin-bottom: 6px;">PostgreSQL — Base de datos relacional</div>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+            <span style="background: #ccfbf1; border: 1px solid #5eead4; padding: 3px 8px; border-radius: 10px; font-size: 0.7rem; color: #134e4a; font-weight: 600;">Usuarios</span>
+            <span style="background: #ccfbf1; border: 1px solid #5eead4; padding: 3px 8px; border-radius: 10px; font-size: 0.7rem; color: #134e4a; font-weight: 600;">Viajes</span>
+            <span style="background: #ccfbf1; border: 1px solid #5eead4; padding: 3px 8px; border-radius: 10px; font-size: 0.7rem; color: #134e4a; font-weight: 600;">Kilometraje</span>
+            <span style="background: #ccfbf1; border: 1px solid #5eead4; padding: 3px 8px; border-radius: 10px; font-size: 0.7rem; color: #134e4a; font-weight: 600;">Recompensas</span>
+            <span style="background: #ccfbf1; border: 1px solid #5eead4; padding: 3px 8px; border-radius: 10px; font-size: 0.7rem; color: #134e4a; font-weight: 600;">Sucursales</span>
+            <span style="background: #ccfbf1; border: 1px solid #5eead4; padding: 3px 8px; border-radius: 10px; font-size: 0.7rem; color: #134e4a; font-weight: 600;">Notificaciones</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Layer 5: Firebase Services -->
+    <div style="text-align: center; font-size: 1.4rem; color: #94a3b8; margin: 4px 0 4px 42px;">↕️ Firebase Services</div>
+    <div style="display: flex; gap: 12px;">
+      <div style="background: #dc2626; color: white; writing-mode: vertical-rl; transform: rotate(180deg); padding: 10px 8px; border-radius: 10px 0 0 10px; font-size: 0.7rem; font-weight: 700; display: flex; align-items: center; justify-content: center; min-width: 30px;">SERVICIOS</div>
+      <div style="flex: 1; background: #FEF2F2; border: 2px solid #f87171; border-radius: 12px; padding: 18px;">
+        <div style="font-weight: 700; font-size: 0.85rem; color: #7f1d1d; margin-bottom: 10px;">🔥 Firebase Complementario</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+          <div style="background: white; border: 1px solid #fca5a5; border-radius: 8px; padding: 8px 14px; text-align: center;">
+            <div style="font-size: 1rem; margin-bottom: 2px;">⚙️</div>
+            <div style="font-size: 0.7rem; font-weight: 700; color: #7f1d1d;">Remote Config</div>
+          </div>
+          <div style="background: white; border: 1px solid #fca5a5; border-radius: 8px; padding: 8px 14px; text-align: center;">
+            <div style="font-size: 1rem; margin-bottom: 2px;">💥</div>
+            <div style="font-size: 0.7rem; font-weight: 700; color: #7f1d1d;">Crashlytics</div>
+          </div>
+          <div style="background: white; border: 1px solid #fca5a5; border-radius: 8px; padding: 8px 14px; text-align: center;">
+            <div style="font-size: 1rem; margin-bottom: 2px;">📊</div>
+            <div style="font-size: 0.7rem; font-weight: 700; color: #7f1d1d;">Analytics</div>
+          </div>
+          <div style="background: white; border: 1px solid #fca5a5; border-radius: 8px; padding: 8px 14px; text-align: center;">
+            <div style="font-size: 1rem; margin-bottom: 2px;">🛡️</div>
+            <div style="font-size: 0.7rem; font-weight: 700; color: #7f1d1d;">App Check</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- AUTENTICACION -->
+<div class="section" id="autenticacion">
+  <div class="section-title"><span class="icon">🔐</span> Flujo de Autenticación Unificado</div>
+  <div class="section-subtitle">Mismo flujo para app móvil y panel administrativo web</div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px;">
+    <div>
+      <div class="flow">
+        <div class="flow-step">
+          <div class="flow-num">1</div>
+          <div class="flow-box">
+            <h4>🙋 Inicio de sesión del usuario</h4>
+            <p>El usuario ingresa credenciales (email o teléfono + contraseña) desde la app móvil o panel web</p>
+          </div>
+        </div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">
+          <div class="flow-num">2</div>
+          <div class="flow-box">
+            <h4>🔥 Firebase Authentication</h4>
+            <p>Firebase valida las credenciales y genera un <strong>ID Token (JWT)</strong> firmado</p>
+          </div>
+        </div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">
+          <div class="flow-num">3</div>
+          <div class="flow-box">
+            <h4>📤 Envío del token al backend</h4>
+            <p>El cliente envía el token en cada request:<br><code style="background:#f1f5f9; padding:2px 6px; border-radius:4px; font-size:0.72rem;">Authorization: Bearer &lt;token&gt;</code></p>
+          </div>
+        </div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">
+          <div class="flow-num">4</div>
+          <div class="flow-box">
+            <h4>⚙️ Validación en Django DRF</h4>
+            <p>El backend verifica el token con <strong>firebase-admin SDK</strong> de forma server-side</p>
+          </div>
+        </div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">
+          <div class="flow-num">5</div>
+          <div class="flow-box">
+            <h4>🗄️ Asociación con PostgreSQL</h4>
+            <p>Una vez validado, el token se asocia con el perfil del usuario en la base de datos</p>
+          </div>
+        </div>
+        <div class="flow-result">
+          ✅ Sistema de autenticación unificado, seguro y reutilizable para ambas plataformas
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 16px;">
+      <div style="background: white; border-radius: 14px; padding: 24px; box-shadow: var(--card-shadow); border: 1px solid #e2e8f0;">
+        <h3 style="font-size: 0.95rem; font-weight: 700; color: var(--primary); margin-bottom: 16px;">🔑 Métodos de autenticación</h3>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <div style="display: flex; align-items: center; gap: 12px; padding: 10px; background: #EFF6FF; border-radius: 8px;">
+            <span style="font-size: 1.2rem;">📧</span>
+            <div>
+              <div style="font-size: 0.82rem; font-weight: 700; color: #1e40af;">Correo electrónico</div>
+              <div style="font-size: 0.72rem; color: var(--muted);">Email + contraseña</div>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px; padding: 10px; background: #F0FDF4; border-radius: 8px;">
+            <span style="font-size: 1.2rem;">📱</span>
+            <div>
+              <div style="font-size: 0.82rem; font-weight: 700; color: #14532d;">Número telefónico</div>
+              <div style="font-size: 0.72rem; color: var(--muted);">Teléfono + contraseña</div>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px; padding: 10px; background: #FFFBEB; border-radius: 8px;">
+            <span style="font-size: 1.2rem;">🔄</span>
+            <div>
+              <div style="font-size: 0.82rem; font-weight: 700; color: #78350f;">Recuperación de contraseña</div>
+              <div style="font-size: 0.72rem; color: var(--muted);">Flujo estándar Firebase</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background: white; border-radius: 14px; padding: 24px; box-shadow: var(--card-shadow); border: 1px solid #e2e8f0;">
+        <h3 style="font-size: 0.95rem; font-weight: 700; color: var(--primary); margin-bottom: 16px;">🛡️ Seguridad</h3>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div style="display: flex; gap: 8px; align-items: flex-start;">
+            <span style="color: var(--success); font-weight: 700; font-size: 0.9rem; flex-shrink: 0;">✓</span>
+            <span style="font-size: 0.8rem; color: var(--text);">Firebase ID Token (JWT) en cada request</span>
+          </div>
+          <div style="display: flex; gap: 8px; align-items: flex-start;">
+            <span style="color: var(--success); font-weight: 700; font-size: 0.9rem; flex-shrink: 0;">✓</span>
+            <span style="font-size: 0.8rem; color: var(--text);">Verificación server-side con firebase-admin SDK</span>
+          </div>
+          <div style="display: flex; gap: 8px; align-items: flex-start;">
+            <span style="color: var(--success); font-weight: 700; font-size: 0.9rem; flex-shrink: 0;">✓</span>
+            <span style="font-size: 0.8rem; color: var(--text);">Roles lógicos: cliente / admin</span>
+          </div>
+          <div style="display: flex; gap: 8px; align-items: flex-start;">
+            <span style="color: var(--success); font-weight: 700; font-size: 0.9rem; flex-shrink: 0;">✓</span>
+            <span style="font-size: 0.8rem; color: var(--text);">App Check para proteger APIs</span>
+          </div>
+          <div style="display: flex; gap: 8px; align-items: flex-start;">
+            <span style="color: var(--success); font-weight: 700; font-size: 0.9rem; flex-shrink: 0;">✓</span>
+            <span style="font-size: 0.8rem; color: var(--text);">Panel restringido a máximo 3 usuarios admin</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ETAPAS -->
+<div class="section" id="etapas">
+  <div class="section-title"><span class="icon">🗓️</span> Etapas de Desarrollo</div>
+  <div class="section-subtitle">7 etapas secuenciales desde el setup inicial hasta la entrega final</div>
+
+  <div class="stages">
+
+    <div class="stage" style="border-top: 4px solid #1A3C5E;">
+      <div class="stage-bar" style="background: linear-gradient(90deg, #1A3C5E, #2a5298);"></div>
+      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+        <div style="width: 28px; height: 28px; border-radius: 50%; background: #1A3C5E; color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.82rem; flex-shrink: 0;">1</div>
+        <h3 style="margin: 0; color: #1A3C5E;">Setup Inicial y Base Técnica</h3>
+      </div>
+      <ul>
+        <li>Configuración inicial del backend</li>
+        <li>Base de datos PostgreSQL</li>
+        <li>Repositorio y estructura base</li>
+        <li>Firebase Admin SDK</li>
+        <li>Estructura base app móvil y panel web</li>
+      </ul>
+    </div>
+
+    <div class="stage" style="border-top: 4px solid #F4A300;">
+      <div class="stage-bar" style="background: linear-gradient(90deg, #F4A300, #f59e0b);"></div>
+      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+        <div style="width: 28px; height: 28px; border-radius: 50%; background: #F4A300; color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.82rem; flex-shrink: 0;">2</div>
+        <h3 style="margin: 0; color: #b45309;">Autenticación Unificada</h3>
+      </div>
+      <ul>
+        <li>Configuración Firebase Authentication</li>
+        <li>Login con email / teléfono</li>
+        <li>Recuperación de contraseña</li>
+        <li>Integración con backend DRF</li>
+        <li>Roles lógicos básicos</li>
+      </ul>
+    </div>
+
+    <div class="stage" style="border-top: 4px solid #7c3aed;">
+      <div class="stage-bar" style="background: linear-gradient(90deg, #7c3aed, #8b5cf6);"></div>
+      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+        <div style="width: 28px; height: 28px; border-radius: 50%; background: #7c3aed; color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.82rem; flex-shrink: 0;">3</div>
+        <h3 style="margin: 0; color: #4c1d95;">Desarrollo del Core Backend</h3>
+      </div>
+      <ul>
+        <li>Modelado de entidades principales</li>
+        <li>Endpoints base</li>
+        <li>Reglas del sistema de recompensas</li>
+        <li>Validaciones y permisos</li>
+        <li>Gestión de usuarios, viajes, km y sucursales</li>
+      </ul>
+    </div>
+
+    <div class="stage" style="border-top: 4px solid #2E86AB;">
+      <div class="stage-bar" style="background: linear-gradient(90deg, #2E86AB, #3b82f6);"></div>
+      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+        <div style="width: 28px; height: 28px; border-radius: 50%; background: #2E86AB; color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.82rem; flex-shrink: 0;">4</div>
+        <h3 style="margin: 0; color: #1e40af;">Panel Administrativo Web</h3>
+      </div>
+      <ul>
+        <li>Login con Firebase</li>
+        <li>Dashboard base</li>
+        <li>Gestión de usuarios y kilometraje</li>
+        <li>Historial y gestión de viajes</li>
+        <li>Sucursales, contactos y notificaciones</li>
+      </ul>
+    </div>
+
+    <div class="stage" style="border-top: 4px solid #0f766e;">
+      <div class="stage-bar" style="background: linear-gradient(90deg, #0f766e, #14b8a6);"></div>
+      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+        <div style="width: 28px; height: 28px; border-radius: 50%; background: #0f766e; color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.82rem; flex-shrink: 0;">5</div>
+        <h3 style="margin: 0; color: #134e4a;">Desarrollo App Móvil</h3>
+      </div>
+      <ul>
+        <li>Login, registro y perfil</li>
+        <li>Pantalla principal (Home)</li>
+        <li>Viaje próximo e historial</li>
+        <li>Sección de beneficios / rewards</li>
+        <li>Integración API + caché local</li>
+      </ul>
+    </div>
+
+    <div class="stage" style="border-top: 4px solid #dc2626;">
+      <div class="stage-bar" style="background: linear-gradient(90deg, #dc2626, #ef4444);"></div>
+      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+        <div style="width: 28px; height: 28px; border-radius: 50%; background: #dc2626; color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.82rem; flex-shrink: 0;">6</div>
+        <h3 style="margin: 0; color: #7f1d1d;">Notificaciones y Servicios Firebase</h3>
+      </div>
+      <ul>
+        <li>Expo Notifications + FCM</li>
+        <li>Envío desde backend y panel</li>
+        <li>Remote Config</li>
+        <li>Crashlytics + Analytics + App Check</li>
+        <li>Recordatorios automáticos</li>
+      </ul>
+    </div>
+
+    <div class="stage" style="border-top: 4px solid #16a34a; grid-column: span 1;">
+      <div class="stage-bar" style="background: linear-gradient(90deg, #16a34a, #22c55e);"></div>
+      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+        <div style="width: 28px; height: 28px; border-radius: 50%; background: #16a34a; color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.82rem; flex-shrink: 0;">7</div>
+        <h3 style="margin: 0; color: #14532d;">Pruebas, Optimización y Entrega</h3>
+      </div>
+      <ul>
+        <li>Testing funcional integral</li>
+        <li>Corrección de incidencias</li>
+        <li>Pulido UX y optimización</li>
+        <li>Documentación básica</li>
+        <li>Builds iOS/Android + Deploy + Entrega final</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- CRONOGRAMA -->
+<div class="section" id="cronograma">
+  <div class="section-title"><span class="icon">📅</span> Cronograma Técnico Estimado — 10 Semanas</div>
+  <div class="section-subtitle">Distribución de actividades por semana</div>
+
+  <div class="gantt-wrapper">
+    <div class="gantt">
+      <!-- Header -->
+      <div style="display: grid; grid-template-columns: 220px 120px repeat(10, 1fr); background: var(--primary); border-radius: 12px 12px 0 0; color: white;">
+        <div style="padding: 10px 14px; font-size: 0.78rem; font-weight: 700; border-right: 1px solid rgba(255,255,255,0.2);">Actividad</div>
+        <div style="padding: 10px 8px; font-size: 0.75rem; font-weight: 700; text-align: center; border-right: 1px solid rgba(255,255,255,0.2);">Responsable</div>
+        <div style="padding: 10px 4px; font-size: 0.72rem; font-weight: 700; text-align: center; border-right: 1px solid rgba(255,255,255,0.2);">S1</div>
+        <div style="padding: 10px 4px; font-size: 0.72rem; font-weight: 700; text-align: center; border-right: 1px solid rgba(255,255,255,0.2);">S2</div>
+        <div style="padding: 10px 4px; font-size: 0.72rem; font-weight: 700; text-align: center; border-right: 1px solid rgba(255,255,255,0.2);">S3</div>
+        <div style="padding: 10px 4px; font-size: 0.72rem; font-weight: 700; text-align: center; border-right: 1px solid rgba(255,255,255,0.2);">S4</div>
+        <div style="padding: 10px 4px; font-size: 0.72rem; font-weight: 700; text-align: center; border-right: 1px solid rgba(255,255,255,0.2);">S5</div>
+        <div style="padding: 10px 4px; font-size: 0.72rem; font-weight: 700; text-align: center; border-right: 1px solid rgba(255,255,255,0.2);">S6</div>
+        <div style="padding: 10px 4px; font-size: 0.72rem; font-weight: 700; text-align: center; border-right: 1px solid rgba(255,255,255,0.2);">S7</div>
+        <div style="padding: 10px 4px; font-size: 0.72rem; font-weight: 700; text-align: center; border-right: 1px solid rgba(255,255,255,0.2);">S8</div>
+        <div style="padding: 10px 4px; font-size: 0.72rem; font-weight: 700; text-align: center; border-right: 1px solid rgba(255,255,255,0.2);">S9</div>
+        <div style="padding: 10px 4px; font-size: 0.72rem; font-weight: 700; text-align: center;">S10</div>
+      </div>
+
+      <!-- Rows -->
+      <div id="gantt-rows"></div>
+    </div>
+  </div>
+
+  <!-- Legend -->
+  <div class="legend" style="margin-top: 16px;">
+    <div class="legend-item"><div class="legend-dot" style="background:#1A3C5E;"></div> Setup / Base</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#F4A300;"></div> Autenticación</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#7c3aed;"></div> Backend Core</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#2E86AB;"></div> Panel Admin Web</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#0f766e;"></div> App Móvil</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#dc2626;"></div> Notificaciones</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#16a34a;"></div> Testing y Entrega</div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- STACK TECNOLOGICO -->
+<div class="section" id="stack">
+  <div class="section-title"><span class="icon">⚙️</span> Stack Tecnológico</div>
+  <div class="section-subtitle">Tecnologías y herramientas utilizadas en la solución</div>
+
+  <div class="tech-grid">
+    <div class="tech-card">
+      <div class="ico">🐍</div>
+      <h4>Backend</h4>
+      <div class="tags">
+        <span class="tech-tag" style="background:#ede9fe; color:#4c1d95;">Django 5</span>
+        <span class="tech-tag" style="background:#ede9fe; color:#4c1d95;">DRF</span>
+        <span class="tech-tag" style="background:#ede9fe; color:#4c1d95;">Python</span>
+      </div>
+    </div>
+    <div class="tech-card">
+      <div class="ico">🗄️</div>
+      <h4>Base de Datos</h4>
+      <div class="tags">
+        <span class="tech-tag" style="background:#ccfbf1; color:#134e4a;">PostgreSQL</span>
+        <span class="tech-tag" style="background:#ccfbf1; color:#134e4a;">ORM Django</span>
+      </div>
+    </div>
+    <div class="tech-card">
+      <div class="ico">🔥</div>
+      <h4>Autenticación</h4>
+      <div class="tags">
+        <span class="tech-tag" style="background:#fef3c7; color:#78350f;">Firebase Auth</span>
+        <span class="tech-tag" style="background:#fef3c7; color:#78350f;">JWT Token</span>
+        <span class="tech-tag" style="background:#fef3c7; color:#78350f;">firebase-admin</span>
+      </div>
+    </div>
+    <div class="tech-card">
+      <div class="ico">📱</div>
+      <h4>App Móvil</h4>
+      <div class="tags">
+        <span class="tech-tag" style="background:#EFF6FF; color:#1e40af;">React Native</span>
+        <span class="tech-tag" style="background:#EFF6FF; color:#1e40af;">Expo SDK 52+</span>
+        <span class="tech-tag" style="background:#EFF6FF; color:#1e40af;">iOS + Android</span>
+      </div>
+    </div>
+    <div class="tech-card">
+      <div class="ico">🖥️</div>
+      <h4>Panel Admin Web</h4>
+      <div class="tags">
+        <span class="tech-tag" style="background:#F0FDF4; color:#14532d;">React</span>
+        <span class="tech-tag" style="background:#F0FDF4; color:#14532d;">SPA</span>
+      </div>
+    </div>
+    <div class="tech-card">
+      <div class="ico">🔔</div>
+      <h4>Notificaciones</h4>
+      <div class="tags">
+        <span class="tech-tag" style="background:#FEF2F2; color:#7f1d1d;">Firebase FCM</span>
+        <span class="tech-tag" style="background:#FEF2F2; color:#7f1d1d;">Expo Notifications</span>
+        <span class="tech-tag" style="background:#FEF2F2; color:#7f1d1d;">Push</span>
+      </div>
+    </div>
+    <div class="tech-card">
+      <div class="ico">📊</div>
+      <h4>Monitoreo</h4>
+      <div class="tags">
+        <span class="tech-tag" style="background:#FFF7ED; color:#7c2d12;">Crashlytics</span>
+        <span class="tech-tag" style="background:#FFF7ED; color:#7c2d12;">Analytics</span>
+      </div>
+    </div>
+    <div class="tech-card">
+      <div class="ico">⚙️</div>
+      <h4>Configuración</h4>
+      <div class="tags">
+        <span class="tech-tag" style="background:#F5F3FF; color:#4c1d95;">Remote Config</span>
+        <span class="tech-tag" style="background:#F5F3FF; color:#4c1d95;">App Check</span>
+      </div>
+    </div>
+    <div class="tech-card">
+      <div class="ico">🛡️</div>
+      <h4>Seguridad API</h4>
+      <div class="tags">
+        <span class="tech-tag" style="background:#f1f5f9; color:#334155;">Bearer Token</span>
+        <span class="tech-tag" style="background:#f1f5f9; color:#334155;">HTTPS</span>
+        <span class="tech-tag" style="background:#f1f5f9; color:#334155;">Server-side validation</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- EQUIPO -->
+<div class="section" id="equipo">
+  <div class="section-title"><span class="icon">👥</span> Recursos del Equipo</div>
+  <div class="section-subtitle">Perfiles asignados al proyecto y sus responsabilidades</div>
+
+  <div class="team-grid">
+    <div class="team-card" style="border-top: 4px solid #F4A300;">
+      <div class="avatar" style="background: #FFFBEB;">📋</div>
+      <h3>Project Manager</h3>
+      <div class="role">Gestión y coordinación del proyecto</div>
+      <ul>
+        <li>Levantamiento y validación de requerimientos</li>
+        <li>Planeación general del proyecto</li>
+        <li>Seguimiento de cronograma y entregables</li>
+        <li>Coordinación cliente-equipo</li>
+        <li>Gestión de prioridades y alcance</li>
+        <li>Validación funcional y acompañamiento en pruebas</li>
+      </ul>
+    </div>
+
+    <div class="team-card" style="border-top: 4px solid #0f766e;">
+      <div class="avatar" style="background: #F0FDFA;">📱</div>
+      <h3>Desarrollador Front-End / Mobile</h3>
+      <div class="role">React Native + Expo · iOS y Android</div>
+      <ul>
+        <li>Desarrollo de app en React Native + Expo</li>
+        <li>Implementación de pantallas y navegación</li>
+        <li>Integración con API backend</li>
+        <li>Configuración funcional iOS / Android</li>
+      </ul>
+    </div>
+
+    <div class="team-card" style="border-top: 4px solid #7c3aed;">
+      <div class="avatar" style="background: #F5F3FF;">⚙️</div>
+      <h3>Desarrollador Back-End</h3>
+      <div class="role">Django · DRF · PostgreSQL · Firebase</div>
+      <ul>
+        <li>Desarrollo de backend / API en Django + DRF</li>
+        <li>Base de datos PostgreSQL</li>
+        <li>Autenticación y seguridad con Firebase</li>
+        <li>Lógica del sistema de recompensas</li>
+        <li>Gestión de usuarios, viajes y kilometraje</li>
+        <li>Integración de notificaciones push</li>
+      </ul>
+    </div>
+
+    <div class="team-card" style="border-top: 4px solid #2E86AB;">
+      <div class="avatar" style="background: #EFF6FF;">🖥️</div>
+      <h3>Desarrollador Web / Integración</h3>
+      <div class="role">React · Panel Admin · Integración</div>
+      <ul>
+        <li>Desarrollo del panel administrativo en React</li>
+        <li>Implementación de vistas y formularios</li>
+        <li>Integración con backend</li>
+        <li>Apoyo en pruebas, ajustes y estabilización</li>
+        <li>Soporte técnico en liberación final</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Org chart simple -->
+  <div style="background: white; border-radius: 14px; padding: 28px; box-shadow: var(--card-shadow); border: 1px solid #e2e8f0; margin-top: 24px;">
+    <h3 style="font-size: 0.95rem; font-weight: 700; color: var(--primary); margin-bottom: 20px; text-align: center;">Estructura del equipo</h3>
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 0;">
+      <div style="background: #F4A300; color: white; padding: 10px 32px; border-radius: 10px; font-weight: 700; font-size: 0.85rem;">📋 Project Manager</div>
+      <div style="height: 20px; width: 2px; background: #cbd5e1;"></div>
+      <div style="height: 2px; width: 75%; background: #cbd5e1;"></div>
+      <div style="display: flex; gap: 16px; justify-content: center; width: 100%; margin-top: 0;">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 0; flex: 1;">
+          <div style="height: 20px; width: 2px; background: #cbd5e1;"></div>
+          <div style="background: #0f766e; color: white; padding: 8px 12px; border-radius: 8px; font-weight: 600; font-size: 0.75rem; text-align: center; width: 100%;">📱 Front-End / Mobile</div>
+          <div style="height:10px; width: 2px; background: #cbd5e1;"></div>
+          <div style="background: #F0FDFA; border: 1.5px solid #5eead4; padding: 6px 8px; border-radius: 6px; font-size: 0.68rem; text-align: center; color: #134e4a; width: 100%;">React Native + Expo<br>iOS + Android</div>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 0; flex: 1;">
+          <div style="height: 20px; width: 2px; background: #cbd5e1;"></div>
+          <div style="background: #7c3aed; color: white; padding: 8px 12px; border-radius: 8px; font-weight: 600; font-size: 0.75rem; text-align: center; width: 100%;">⚙️ Back-End</div>
+          <div style="height:10px; width: 2px; background: #cbd5e1;"></div>
+          <div style="background: #F5F3FF; border: 1.5px solid #c4b5fd; padding: 6px 8px; border-radius: 6px; font-size: 0.68rem; text-align: center; color: #4c1d95; width: 100%;">Django + DRF<br>PostgreSQL · Firebase</div>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 0; flex: 1;">
+          <div style="height: 20px; width: 2px; background: #cbd5e1;"></div>
+          <div style="background: #2E86AB; color: white; padding: 8px 12px; border-radius: 8px; font-weight: 600; font-size: 0.75rem; text-align: center; width: 100%;">🖥️ Web / Integración</div>
+          <div style="height:10px; width: 2px; background: #cbd5e1;"></div>
+          <div style="background: #EFF6FF; border: 1.5px solid #93c5fd; padding: 6px 8px; border-radius: 6px; font-size: 0.68rem; text-align: center; color: #1e40af; width: 100%;">React<br>Panel Admin · QA</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  Vivelo por Autobús — Anexo Técnico · Fecha: 23 de marzo de 2026 · Versión MVP
+</footer>
+
+<script>
+// Build Gantt
+const rows = [
+  { act: "Setup Django + PostgreSQL + Firebase", resp: "Backend", color: "#1A3C5E", weeks: [1,1,0,0,0,0,0,0,0,0] },
+  { act: "Autenticación Firebase + DRF", resp: "Backend", color: "#F4A300", weeks: [0,1,1,0,0,0,0,0,0,0] },
+  { act: "API Core + Lógica de negocio", resp: "Backend", color: "#7c3aed", weeks: [0,0,1,1,0,0,0,0,0,0] },
+  { act: "Panel Admin Web – Fase 1", resp: "Web/Int.", color: "#2E86AB", weeks: [0,0,0,1,1,0,0,0,0,0] },
+  { act: "Panel Admin Web – Fase 2", resp: "Web/Int.", color: "#2E86AB", weeks: [0,0,0,0,1,0,0,0,0,0] },
+  { act: "App Móvil – Fase 1 (Auth + Perfil)", resp: "Mobile", color: "#0f766e", weeks: [0,0,0,0,0,1,0,0,0,0] },
+  { act: "App Móvil – Fase 2 (Home + Viajes)", resp: "Mobile", color: "#0f766e", weeks: [0,0,0,0,0,0,1,0,0,0] },
+  { act: "App Móvil – Fase 3 (Rewards)", resp: "Mobile", color: "#0f766e", weeks: [0,0,0,0,0,0,0,1,0,0] },
+  { act: "Notificaciones + Firebase Services", resp: "Backend", color: "#dc2626", weeks: [0,0,0,0,0,0,0,0,1,0] },
+  { act: "Testing, Pulido y Entrega Final", resp: "Todos", color: "#16a34a", weeks: [0,0,0,0,0,0,0,0,0,1] },
+  { act: "Soporte PM + Coordinación", resp: "PM", color: "#94a3b8", weeks: [1,1,1,1,1,1,1,1,1,1] },
+];
+
+const container = document.getElementById('gantt-rows');
+rows.forEach((row, i) => {
+  const div = document.createElement('div');
+  div.style.cssText = `display: grid; grid-template-columns: 220px 120px repeat(10, 1fr); background: ${i%2===0 ? 'white' : '#f8fafc'}; border-bottom: 1px solid #e2e8f0;`;
+  if (i === rows.length - 1) div.style.borderRadius = '0 0 12px 12px';
+
+  let html = `<div style="padding: 8px 14px; font-size: 0.75rem; font-weight: 600; color: #1e293b; display: flex; align-items: center; border-right: 1px solid #e2e8f0;">${row.act}</div>`;
+  html += `<div style="padding: 8px; font-size: 0.7rem; color: #64748b; text-align: center; display: flex; align-items: center; justify-content: center; border-right: 1px solid #e2e8f0;">${row.resp}</div>`;
+
+  row.weeks.forEach((active, wi) => {
+    const isLast = wi === 9;
+    html += `<div style="padding: 6px 4px; display: flex; align-items: center; justify-content: center; border-right: ${isLast ? 'none' : '1px solid #e2e8f0'};">`;
+    if (active) {
+      html += `<div style="width: 100%; height: 18px; border-radius: 4px; background: ${row.color}; opacity: 0.88;"></div>`;
+    }
+    html += '</div>';
+  });
+
+  div.innerHTML = html;
+  container.appendChild(div);
+});
+</script>
+
+</body>
+</html>
