@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cotización — Sitio Web Corporativo</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0c1410;
+  --ink2:#1b2b24;
+  --bg:#f5f8f5;
+  --surface:#ffffff;
+  --border:#dde8e0;
+  --border2:#bdd4c5;
+  --teal:#0b6e5a;
+  --teal-mid:#128a70;
+  --teal-lt:#e4f3ee;
+  --lime:#b8f04a;
+  --lime-dk:#7ab520;
+  --muted:#5e7a6a;
+  --muted2:#98b8a8;
+}
+html{font-size:15px}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);line-height:1.65}
+
+.print-btn{position:fixed;bottom:1.8rem;right:1.8rem;background:var(--teal);color:var(--lime);border:none;padding:.55rem 1.1rem;font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.14em;cursor:pointer;z-index:99;transition:opacity .2s}
+.print-btn:hover{opacity:.8}
+@media print{.print-btn{display:none}}
+
+/* ── HEADER ── */
+header{background:var(--ink2);position:relative;overflow:hidden}
+.hbg{position:absolute;inset:0;pointer-events:none}
+.hbg-block{position:absolute;right:0;top:0;bottom:0;width:45%;background:var(--teal);clip-path:polygon(16% 0,100% 0,100% 100%,0 100%)}
+.hbg-lime{position:absolute;right:0;top:0;bottom:0;width:14%;background:var(--lime);clip-path:polygon(20% 0,100% 0,100% 100%,0 100%)}
+.hbg-dots{position:absolute;left:0;bottom:0;width:50%;height:60%;background-image:radial-gradient(circle,rgba(255,255,255,.05) 1px,transparent 1px);background-size:20px 20px}
+
+.hi{max-width:960px;margin:0 auto;padding:3.5rem 2.5rem 3rem;position:relative;z-index:1}
+.htag{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.24em;text-transform:uppercase;color:var(--lime);margin-bottom:1.4rem}
+header h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.8rem,3.8vw,2.75rem);line-height:1.07;color:#fff;max-width:520px;letter-spacing:-.025em}
+header h1 mark{background:none;color:var(--lime)}
+.hsub{margin-top:.75rem;font-family:'DM Mono',monospace;font-size:.68rem;color:var(--muted2);letter-spacing:.1em}
+.meta{margin-top:2.5rem;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(255,255,255,.07)}
+.mc{padding:.95rem 0 .6rem;border-right:1px solid rgba(255,255,255,.07)}
+.mc:last-child{border-right:none}
+.ml{font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted2);margin-bottom:.22rem}
+.mv{font-family:'Syne',sans-serif;font-size:.84rem;font-weight:600;color:#fff}
+
+/* ── MAIN ── */
+main{max-width:960px;margin:0 auto;padding:3rem 2.5rem 5rem}
+
+.intro{border-left:3px solid var(--teal-mid);padding:.15rem 0 .15rem 1.4rem;margin-bottom:3rem}
+.intro p{font-size:.95rem;color:var(--ink2);line-height:1.78;font-weight:300;margin-bottom:.5rem}
+.intro p:last-child{margin-bottom:0}
+
+/* section label */
+.sl{display:flex;align-items:center;gap:.9rem;margin-top:3rem;margin-bottom:1.5rem}
+.sn{font-family:'Syne',sans-serif;font-weight:800;font-size:.68rem;background:var(--teal);color:var(--lime);padding:.28rem .62rem;letter-spacing:.04em;white-space:nowrap}
+.st{font-family:'Syne',sans-serif;font-weight:700;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--teal)}
+.sl::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* scope */
+.sg{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);margin-bottom:1px}
+.sc{background:var(--surface);padding:1.3rem 1.4rem;border-top:2px solid transparent;transition:border-color .2s,background .2s}
+.sc:hover{background:var(--teal-lt);border-top-color:var(--teal-mid)}
+.scn{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.18em;color:var(--teal-mid);margin-bottom:.4rem}
+.sct{font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem;color:var(--ink);margin-bottom:.38rem}
+.scd{font-size:.77rem;color:var(--muted);line-height:1.6}
+
+/* consideraciones */
+.nota{background:var(--teal-lt);border-left:3px solid var(--teal-mid);padding:1rem 1.3rem;margin-top:1px;font-size:.78rem;color:var(--ink2);line-height:1.65}
+.nota strong{font-family:'Syne',sans-serif;font-weight:700;font-size:.72rem;display:block;margin-bottom:.35rem;color:var(--teal)}
+
+/* phases */
+.phase{border:1px solid var(--border);margin-bottom:2px;background:var(--surface)}
+.phd{display:grid;grid-template-columns:52px 1fr auto;align-items:center;gap:.8rem;padding:1rem 1.3rem;border-bottom:1px solid var(--border)}
+.phn{font-family:'Syne',sans-serif;font-weight:800;font-size:1.6rem;color:var(--border2);text-align:center;line-height:1}
+.pht{font-family:'Syne',sans-serif;font-weight:700;font-size:.92rem;color:var(--ink)}
+.php{font-family:'DM Mono',monospace;font-size:0;color:transparent;/* no prices in phases */}
+.phb{padding:.85rem 1.3rem .85rem 4rem;background:#fafcfa}
+.phb ul{list-style:none}
+.phb li{font-size:.77rem;color:var(--muted);padding:.18rem 0 .18rem 1.15rem;position:relative}
+.phb li::before{content:'—';position:absolute;left:0;color:var(--teal-mid);font-size:.68rem;line-height:1.85}
+.phnote{font-family:'DM Mono',monospace;font-size:.67rem;color:var(--muted2);border-top:1px dashed var(--border);margin-top:.65rem;padding-top:.55rem;letter-spacing:.02em}
+
+/* hosting section */
+.hosting-box{background:var(--surface);border:1px solid var(--border);padding:1.4rem 1.5rem;font-size:.82rem;color:var(--ink2);line-height:1.75}
+.hosting-box ul{list-style:none;margin-top:.7rem}
+.hosting-box li{padding:.2rem 0 .2rem 1.1rem;position:relative;font-size:.78rem;color:var(--muted)}
+.hosting-box li::before{content:'—';position:absolute;left:0;color:var(--teal-mid);font-size:.68rem;line-height:1.85}
+
+/* total */
+.total-wrap{margin-top:1.5rem}
+.total{display:grid;grid-template-columns:1fr auto;align-items:center;gap:2rem;background:var(--ink2);padding:2rem 2.2rem;position:relative;overflow:hidden}
+.total::after{content:'';position:absolute;right:0;top:0;bottom:0;width:5px;background:var(--lime)}
+.ttitle{font-family:'Syne',sans-serif;font-weight:800;font-size:.95rem;color:#fff;margin-bottom:.3rem}
+.tdetail{font-size:.72rem;color:var(--muted2)}
+.tnote{font-family:'DM Mono',monospace;font-size:.64rem;color:var(--muted2);margin-top:.2rem;letter-spacing:.02em}
+.tamt{text-align:right}
+.tcur{font-family:'DM Mono',monospace;font-size:.58rem;color:var(--muted2);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.2rem}
+.tfig{font-family:'Syne',sans-serif;font-weight:800;font-size:2.2rem;color:var(--lime);line-height:1;letter-spacing:-.03em}
+.tfig-sub{font-family:'DM Mono',monospace;font-size:.62rem;color:var(--muted2);margin-top:.25rem}
+
+/* timeline */
+.tl{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:.6rem}
+.tls{background:var(--surface);padding:1.4rem 1.3rem;position:relative}
+.tls:hover{background:var(--teal-lt)}
+.tlbar{height:3px;background:var(--teal);margin-bottom:1rem;width:100%;position:relative}
+.tlbar::after{content:attr(data-n);position:absolute;right:0;top:-10px;font-family:'Syne',sans-serif;font-weight:800;font-size:.65rem;color:var(--teal);background:var(--surface);padding:0 .3rem;line-height:1.8}
+.tls:hover .tlbar::after{background:var(--teal-lt)}
+.tlw{font-family:'DM Mono',monospace;font-size:.57rem;letter-spacing:.16em;text-transform:uppercase;color:var(--teal-mid);margin-bottom:.35rem}
+.tlph{font-family:'Syne',sans-serif;font-weight:700;font-size:.85rem;color:var(--ink);margin-bottom:.3rem}
+.tld{font-size:.74rem;color:var(--muted);line-height:1.5}
+.tlnote{font-family:'DM Mono',monospace;font-size:.66rem;color:var(--muted2);margin-top:.5rem;font-style:normal}
+
+/* notes */
+.notes{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border)}
+.note{background:var(--surface);padding:1.2rem 1.3rem;border-left:3px solid var(--teal-mid);transition:background .18s}
+.note:hover{background:var(--teal-lt)}
+.ntitle{font-family:'Syne',sans-serif;font-weight:700;font-size:.8rem;color:var(--ink);margin-bottom:.4rem}
+.nbody{font-size:.76rem;color:var(--muted);line-height:1.62}
+
+/* refs */
+.refs{margin-top:1.5rem;background:var(--surface);border:1px solid var(--border);padding:1.4rem 1.5rem}
+.refs-title{font-family:'Syne',sans-serif;font-weight:700;font-size:.8rem;color:var(--teal);margin-bottom:.9rem;letter-spacing:.05em}
+.refs-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.ref-link{display:flex;align-items:center;gap:.6rem;padding:.7rem 1rem;border:1px solid var(--border);background:var(--bg);text-decoration:none;transition:border-color .18s,background .18s;color:var(--ink)}
+.ref-link:hover{border-color:var(--teal-mid);background:var(--teal-lt)}
+.ref-dot{width:7px;height:7px;background:var(--teal);border-radius:50%;flex-shrink:0}
+.ref-url{font-family:'DM Mono',monospace;font-size:.66rem;color:var(--teal);letter-spacing:.02em;word-break:break-all}
+
+/* footer */
+footer{background:var(--ink2);padding:1.8rem 2.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.ftbrand{font-family:'Syne',sans-serif;font-weight:800;font-size:.85rem;color:var(--lime)}
+.ftnote{font-family:'DM Mono',monospace;font-size:.59rem;color:var(--muted2);text-align:right;line-height:1.75;letter-spacing:.03em}
+
+@media(max-width:680px){
+  main{padding:2rem 1.2rem 4rem}
+  .hi{padding:2.5rem 1.5rem 2rem}
+  .meta{grid-template-columns:1fr 1fr}
+  .sg{grid-template-columns:1fr}
+  .tl{grid-template-columns:1fr}
+  .notes{grid-template-columns:1fr}
+  .refs-grid{grid-template-columns:1fr}
+  .total{grid-template-columns:1fr}
+  .tamt{text-align:left}
+  footer{flex-direction:column}
+  .ftnote{text-align:left}
+  .phb{padding-left:1.3rem}
+}
+@media print{
+  body{background:#fff}
+  .phase,.sc,.note{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">⎙ IMPRIMIR / PDF</button>
+
+<header>
+  <div class="hbg">
+    <div class="hbg-block"></div>
+    <div class="hbg-lime"></div>
+    <div class="hbg-dots"></div>
+  </div>
+  <div class="hi">
+    <div class="htag">Cotización · Abril 2026</div>
+    <h1>Sitio Web Corporativo<br>para <mark>Empresa Consultora</mark><br><mark>de Construcción</mark></h1>
+    <p class="hsub">Diseño · Desarrollo · Infraestructura Digital</p>
+    <div class="meta">
+      <div class="mc"><div class="ml">Fecha de emisión</div><div class="mv">Abril 2026</div></div>
+      <div class="mc"><div class="ml">Validez</div><div class="mv">30 días calendario</div></div>
+      <div class="mc"><div class="ml">Moneda</div><div class="mv">Peso mexicano</div></div>
+      <div class="mc"><div class="ml">Tipo de proyecto</div><div class="mv">Sitio corporativo</div></div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <div class="intro">
+    <p>Esta cotización contempla el diseño, desarrollo e implementación de un sitio web corporativo profesional para una empresa consultora del sector construcción.</p>
+    <p>El objetivo es establecer una presencia digital sólida, comunicar de forma clara la propuesta de valor de la empresa y facilitar el contacto con clientes potenciales.</p>
+  </div>
+
+  <!-- 01 ALCANCE -->
+  <div class="sl"><span class="sn">01</span><span class="st">Alcance del sitio</span></div>
+
+  <div class="sg">
+    <div class="sc"><div class="scn">SEC. 01</div><div class="sct">Inicio</div><p class="scd">Presentación visual, propuesta de valor principal, llamadas a la acción y acceso rápido a secciones clave.</p></div>
+    <div class="sc"><div class="scn">SEC. 02</div><div class="sct">Quiénes Somos</div><p class="scd">Historia, misión, visión, valores y equipo directivo. Transmite confianza y trayectoria al cliente potencial.</p></div>
+  </div>
+  <div class="sg">
+    <div class="sc"><div class="scn">SEC. 03</div><div class="sct">Qué Hacemos</div><p class="scd">Descripción de líneas de negocio, metodología de trabajo y diferenciadores frente a la competencia.</p></div>
+    <div class="sc"><div class="scn">SEC. 04</div><div class="sct">Servicios</div><p class="scd">Catálogo detallado: consultoría técnica, supervisión de obra, gestión de proyectos. Con íconos y descripciones.</p></div>
+  </div>
+  <div class="sg">
+    <div class="sc"><div class="scn">SEC. 05</div><div class="sct">Portafolio / Proyectos</div><p class="scd">Galería con fotografías, descripción y datos de proyectos realizados para demostrar experiencia.</p></div>
+    <div class="sc"><div class="scn">SEC. 06</div><div class="sct">Contacto</div><p class="scd">Formulario de contacto, mapa de ubicación, teléfono, email y redes sociales. Integración con correo electrónico.</p></div>
+  </div>
+
+  <div class="nota">
+    <strong>Consideraciones del alcance</strong>
+    La presente propuesta contempla un sitio web corporativo informativo. No incluye panel de administración (CMS) ni autogestión de contenido, salvo que se solicite y cotice por separado.
+  </div>
+
+  <!-- 02 FASES -->
+  <div class="sl"><span class="sn">02</span><span class="st">Fases de desarrollo</span></div>
+
+  <div class="phase">
+    <div class="phd">
+      <span class="phn">01</span>
+      <span class="pht">Diseño UX/UI</span>
+    </div>
+    <div class="phb">
+      <ul>
+        <li>Investigación de referentes del sector construcción / consultoría</li>
+        <li>Definición de paleta de colores, tipografía y sistema de diseño</li>
+        <li>Wireframes de todas las secciones (baja fidelidad)</li>
+        <li>Diseño visual completo en Figma (alta fidelidad)</li>
+        <li>Hasta 2 rondas de revisiones y ajustes</li>
+      </ul>
+      <p class="phnote">Entregable: archivo PDF con diseño aprobado, listo para desarrollo.</p>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phd">
+      <span class="phn">02</span>
+      <span class="pht">Desarrollo Front-end</span>
+    </div>
+    <div class="phb">
+      <ul>
+        <li>Maquetación HTML/CSS/JS</li>
+        <li>Diseño responsivo: mobile, tablet y escritorio</li>
+        <li>Animaciones y transiciones de scroll</li>
+        <li>Optimización de velocidad de carga (Core Web Vitals)</li>
+        <li>Formulario de contacto con envío a correo</li>
+        <li>Integración de mapa (Google Maps)</li>
+      </ul>
+      <p class="phnote">Entregable: sitio funcional en entorno de pruebas (staging).</p>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phd">
+      <span class="phn">03</span>
+      <span class="pht">SEO Básico &amp; Lanzamiento</span>
+    </div>
+    <div class="phb">
+      <ul>
+        <li>Configuración de metaetiquetas (title, description, OG)</li>
+        <li>Alta en Google Analytics</li>
+        <li>Migración al dominio definitivo y pruebas finales</li>
+      </ul>
+      <p class="phnote">Entregable: sitio publicado, indexado y con monitoreo activo.</p>
+    </div>
+  </div>
+
+  <!-- 03 DOMINIO Y HOSTING -->
+  <div class="sl"><span class="sn">03</span><span class="st">Costos de dominio y hosting</span></div>
+
+  <div class="hosting-box">
+    Se deben considerar costos anuales de dominio (varía según el nombre deseado) y el servicio de hosting anual, que es el servicio de almacenamiento donde se aloja la página, así como el Certificado SSL.
+    <ul>
+      <li>Costo de dominio: varía según el nombre y extensión elegida</li>
+      <li>Hosting anual: servicio de almacenamiento donde se aloja la página</li>
+      <li>Certificado SSL: incluido en la mayoría de los planes de hosting</li>
+    </ul>
+  </div>
+
+  <!-- 04 INVERSIÓN -->
+  <div class="sl"><span class="sn">04</span><span class="st">Resumen de inversión</span></div>
+
+  <div class="total-wrap">
+    <div class="total">
+      <div>
+        <div class="ttitle">Inversión Total del Proyecto</div>
+        <div class="tdetail">Diseño y desarrollo</div>
+        <div class="tnote">Adicional considerar costo recurrente anual (solo dominio + hosting)</div>
+      </div>
+      <div class="tamt">
+        <div class="tcur">Precio</div>
+        <div class="tfig">$6,700</div>
+        <div class="tfig-sub">+ IVA</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 05 CRONOGRAMA -->
+  <div class="sl"><span class="sn">05</span><span class="st">Cronograma estimado</span></div>
+
+  <div class="tl">
+    <div class="tls">
+      <div class="tlbar" data-n="1"></div>
+      <div class="tlw">Semana 1</div>
+      <div class="tlph">Diseño</div>
+      <div class="tld">Wireframes, paleta, identidad visual</div>
+    </div>
+    <div class="tls">
+      <div class="tlbar" data-n="2"></div>
+      <div class="tlw">Semanas 2 – 3</div>
+      <div class="tlph">Desarrollo y lanzamiento</div>
+      <div class="tld">Desarrollo web, revisión y lanzamiento</div>
+    </div>
+  </div>
+  <p class="tlnote">* El cronograma inicia una vez aprobada la cotización y recibido el anticipo del 50%.</p>
+
+  <!-- 06 CONDICIONES -->
+  <div class="sl"><span class="sn">06</span><span class="st">Condiciones y notas</span></div>
+
+  <div class="notes">
+    <div class="note"><div class="ntitle">Forma de pago</div><p class="nbody">50% de anticipo al inicio del proyecto. 50% restante a la entrega del sitio publicado. Transferencia bancaria o PayPal.</p></div>
+    <div class="note"><div class="ntitle">Contenido y textos</div><p class="nbody">El cliente provee textos, fotografías y logotipos. Redacción y fotografía de stock se cotiza por separado.</p></div>
+    <div class="note"><div class="ntitle">Revisiones incluidas</div><p class="nbody">Hasta 2 rondas de revisiones en diseño y 1 en desarrollo. Cambios adicionales: $500 por hora.</p></div>
+    <div class="note"><div class="ntitle">Soporte post-lanzamiento</div><p class="nbody">30 días de soporte técnico gratuito post-publicación. Cambios y actualizaciones varía precio según complejidad.</p></div>
+    <div class="note"><div class="ntitle">Propiedad intelectual</div><p class="nbody">Al completar el pago total, el cliente recibe todos los derechos sobre el diseño y código desarrollado.</p></div>
+    <div class="note"><div class="ntitle">Validez de la oferta</div><p class="nbody">Esta cotización es válida por 30 días calendario desde la fecha de emisión.</p></div>
+  </div>
+
+  <!-- 07 REFERENCIAS -->
+  <div class="sl"><span class="sn">07</span><span class="st">Proyectos de referencia</span></div>
+
+  <div class="refs">
+    <div class="refs-title">Sitios web desarrollados previamente con características similares</div>
+    <div class="refs-grid">
+      <a class="ref-link" href="https://www.avose.mx/" target="_blank">
+        <div class="ref-dot"></div>
+        <span class="ref-url">www.avose.mx</span>
+      </a>
+      <a class="ref-link" href="https://yaxalkaphell.com/" target="_blank">
+        <div class="ref-dot"></div>
+        <span class="ref-url">yaxalkaphell.com</span>
+      </a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="ftbrand">Cotización — Sitio Web Corporativo</div>
+  <div class="ftnote">Moneda: peso mexicano · Válida 30 días desde emisión<br>Dominio y hosting se cotizan por separado según nombre elegido</div>
+</footer>
+
+</body>
+</html>
